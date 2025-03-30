@@ -58,6 +58,7 @@ func IniciaLambda(ctx context.Context, request events.APIGatewayProxyRequest) (*
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("bucketName"), os.Getenv("BucketName"))
 
 	err = database.IniciarDB(awsgo.Ctx)
+
 	if err != nil {
 		res = &events.APIGatewayProxyResponse{
 			StatusCode: 500,

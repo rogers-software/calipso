@@ -11,6 +11,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
+var User string
+var Password string
+var Host string
 var DatabaseName string
 
 type Product struct {
@@ -20,16 +23,14 @@ type Product struct {
 }
 
 func IniciarDB(ctx context.Context) error {
-	user := ctx.Value(models.Key("user")).(string)
-	passwd := ctx.Value(models.Key("password")).(string)
-	host := ctx.Value(models.Key("host")).(string)
+	User := ctx.Value(models.Key("user")).(string)
+	Password := ctx.Value(models.Key("password")).(string)
+	Host := ctx.Value(models.Key("host")).(string)
 	DatabaseName = ctx.Value(models.Key("database")).(string)
 
-	connStr := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=verify-full", user, passwd, host, DatabaseName)
+	connStr := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
 
 	db, err := sql.Open("postgres", connStr)
-
-	//defer db.Close()
 
 	if err != nil {
 		log.Fatal(err)
@@ -39,50 +40,53 @@ func IniciarDB(ctx context.Context) error {
 		log.Fatal(err)
 	}
 
+	defer db.Close()
+
 	fmt.Println("Conexion Exitosa con la BD")
 
-	createProductTable(db)
+	/*
+		createProductTable(db)
 
-	product := Product{"Book", 15.55, true}
+		product := Product{"Book", 15.55, true}
 
-	pk := insertProduct(db, product)
+		pk := insertProduct(db, product)
 
-	fmt.Printf("ID = %d\n", pk)
+		fmt.Printf("ID = %d\n", pk)
 
-	var name string
-	var available bool
-	var price float64
+		var name string
+		var available bool
+		var price float64
 
-	query := "SELECT name, available, price FROM product WHERE id = $1"
+		query := "SELECT name, available, price FROM product WHERE id = $1"
 
-	err = db.QueryRow(query, pk).Scan(&name, &available, &price)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("Name: %s\n", name)
-	fmt.Printf("Available: %t\n", available)
-	fmt.Printf("Price: %f\n", price)
-
-	// otra forma
-	data := []Product{}
-	rows, err := db.Query("SELECT name, available, price from product")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err := rows.Scan(&name, &available, &price)
+		err = db.QueryRow(query, pk).Scan(&name, &available, &price)
 		if err != nil {
 			log.Fatal(err)
 		}
-		data = append(data, Product{name, price, available})
 
-	}
+		fmt.Printf("Name: %s\n", name)
+		fmt.Printf("Available: %t\n", available)
+		fmt.Printf("Price: %f\n", price)
 
-	fmt.Println(data)
+		// otra forma
+		data := []Product{}
+		rows, err := db.Query("SELECT name, available, price from product")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
 
+		for rows.Next() {
+			err := rows.Scan(&name, &available, &price)
+			if err != nil {
+				log.Fatal(err)
+			}
+			data = append(data, Product{name, price, available})
+
+		}
+
+		fmt.Println(data)
+	*/
 	return err
 
 	//age := 21
@@ -116,10 +120,23 @@ func insertProduct(db *sql.DB, product Product) int {
 		log.Fatal(err)
 	}
 	return pk
-
 }
 
 func BaseConectada(db *sql.DB) bool {
 	err := db.Ping()
 	return err == nil
+}
+
+func GetConnection() *sql.DB {
+	dns := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
+
+	db, err := sql.Open("postgres", dns)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	return db
 }

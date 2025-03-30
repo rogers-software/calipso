@@ -18,5 +18,8 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.29.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.17 // indirect
 	github.com/aws/smithy-go v1.22.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/lib/pq v1.10.9 // indirect
+	go.mongodb.org/mongo-driver v1.17.3 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 )
