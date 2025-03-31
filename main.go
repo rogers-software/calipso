@@ -67,6 +67,7 @@ func IniciaLambda(ctx context.Context, request events.APIGatewayProxyRequest) (*
 				"Content-Type": "Application/json",
 			},
 		}
+		return res, nil
 	}
 
 	respAPI := handlers.Manejadores(awsgo.Ctx, request)

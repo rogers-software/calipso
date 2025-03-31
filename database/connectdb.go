@@ -94,6 +94,7 @@ func IniciarDB(ctx context.Context) error {
 
 }
 
+/*
 func createProductTable(db *sql.DB) {
 	query := `CREATE TABLE IF NOT EXIST product (
 	 id SERIAL PRIMARY KEY,
@@ -121,6 +122,7 @@ func insertProduct(db *sql.DB, product Product) int {
 	}
 	return pk
 }
+*/
 
 func BaseConectada(db *sql.DB) bool {
 	err := db.Ping()
