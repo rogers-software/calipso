@@ -37,13 +37,20 @@ func IniciarDB(ctx context.Context) error {
 	fmt.Println("Password " + Password)
 	fmt.Println("Database " + DatabaseName)
 
-	db, err := sql.Open("postgres", connStr)
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		"187.191.42.167", 5422, "postgres", "root", "rs")
+
+	db, err := sql.Open("postgres", psqlInfo /*connStr */)
 
 	if err != nil {
+
 		log.Fatal(err)
 	}
 
 	if err = db.Ping(); err != nil {
+		fmt.Println("error ", err)
+
 		log.Fatal(err)
 	}
 
