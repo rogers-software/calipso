@@ -44,12 +44,11 @@ func IniciarDB(ctx context.Context) error {
 	db, err := sql.Open("postgres", psqlInfo /*connStr */)
 
 	if err != nil {
-
+		fmt.Println("error ", err)
 		log.Fatal(err)
 	}
 
 	if err = db.Ping(); err != nil {
-		fmt.Println("error ", err)
 
 		log.Fatal(err)
 	}
