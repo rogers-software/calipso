@@ -4,6 +4,5 @@ git push
 export GOOS=linux
 export GOARCH=amd64
 go build -tags lambda.norpc -o bootstrap main.go
-rm main.zip
 zip calipso.zip bootstrap
 
