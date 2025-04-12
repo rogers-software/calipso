@@ -87,7 +87,7 @@ func IniciaLambda(ctx context.Context, request events.APIGatewayProxyRequest) (*
 }
 
 func ValidoParametros() bool {
-	_, traeParametro := os.LookupEnv("SecrectName")
+	_, traeParametro := os.LookupEnv("SecretName")
 	if !traeParametro {
 		return traeParametro
 	}
