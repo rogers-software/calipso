@@ -39,7 +39,7 @@ func IniciarDB(ctx context.Context) error {
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
-		"187.191.42.167", 5422, "postgres", "root", "rs")
+		"187.191.42.167", 5433, "postgres", "root", "rs")
 
 	db, err := sql.Open("postgres", psqlInfo /*connStr */)
 
