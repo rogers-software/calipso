@@ -28,7 +28,11 @@ func IniciarDB(ctx context.Context) error {
 	Host := ctx.Value(models.Key("host")).(string)
 	DatabaseName = ctx.Value(models.Key("database")).(string)
 
+	fmt.Println("Host Database" + Host)
+
 	connStr := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
+
+	fmt.Println("connStr" + connStr)
 
 	db, err := sql.Open("postgres", connStr)
 
