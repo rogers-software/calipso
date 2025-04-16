@@ -30,7 +30,7 @@ func IniciarDB(ctx context.Context) error {
 
 	fmt.Println("Host Database " + Host)
 
-	connStr := fmt.Sprintf("postgres://%s:root@%s/%s?sslmode=disable", User, Host, DatabaseName)
+	connStr := fmt.Sprintf("postgres://%s:%s@%s/%s", User, Password, Host, DatabaseName)
 
 	fmt.Println("Conect Postgres " + connStr)
 	fmt.Println("User " + User)
