@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"rogers-software/calipso/awsgo"
 	"rogers-software/calipso/database"
@@ -46,7 +47,8 @@ func IniciaLambda(ctx context.Context, request events.APIGatewayProxyRequest) (*
 		return res, nil
 	}
 
-	path := strings.Replace(request.PathParameters["calipso"], os.Getenv("UrlPrefix"), "", -1)
+	path := strings.Replace(request.PathParameters["produccion"], os.Getenv("UrlPrefix"), "", -1)
+	fmt.Println("path:", path)
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("path"), path)
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("method"), request.HTTPMethod)
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("user"), SecretModel.Username)
