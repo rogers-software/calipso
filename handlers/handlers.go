@@ -25,7 +25,7 @@ func Manejadores(ctx context.Context, request events.APIGatewayProxyRequest) mod
 	fmt.Println("method->", ctx.Value(models.Key("method")).(string))
 	switch ctx.Value(models.Key("method")).(string) {
 	case "POST":
-		switch ctx.Value(models.Key("method")).(string) {
+		switch ctx.Value(models.Key("path")).(string) {
 		case "registro":
 			return routers.Registro(ctx)
 		}
