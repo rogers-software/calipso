@@ -22,7 +22,7 @@ func Manejadores(ctx context.Context, request events.APIGatewayProxyRequest) mod
 		r.Message = msg
 		return r
 	}
-
+	fmt.Println("method->", ctx.Value(models.Key("method")).(string))
 	switch ctx.Value(models.Key("method")).(string) {
 	case "POST":
 		switch ctx.Value(models.Key("method")).(string) {
