@@ -13,7 +13,7 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 
 	var resultado models.Usuario
 
-	query := "SELECT id, nombre FROM product WHERE email = $1"
+	query := "SELECT id, nombre, apellidos FROM usuarios WHERE email = $1"
 
 	err := db.QueryRow(query, email).Scan(&id, &nombre, &apellidos)
 
