@@ -24,13 +24,13 @@ func Registro(ctx context.Context) models.ResApi {
 	}
 
 	if len(t.Email) == 0 {
-		r.Message = "Debe especifical el email"
+		r.Message = "Debe especificar el email"
 		fmt.Println(r.Message)
 		return r
 	}
 
 	if len(t.Password) < 6 {
-		r.Message = "Debe especifical al menos 6 caracteres en passwors"
+		r.Message = "Debe especifical al menos 6 caracteres en password"
 		fmt.Println(r.Message)
 		return r
 	}

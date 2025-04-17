@@ -49,6 +49,8 @@ func IniciaLambda(ctx context.Context, request events.APIGatewayProxyRequest) (*
 
 	path := strings.Replace(request.PathParameters["calipsogo"], os.Getenv("UrlPrefix"), "", -1)
 	fmt.Println("path:", path)
+	fmt.Println("PathParameters->", request.PathParameters["calipsogo"])
+	fmt.Println("UrlPrefix->", os.Getenv("UrlPrefix"))
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("path"), path)
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("method"), request.HTTPMethod)
 	awsgo.Ctx = context.WithValue(awsgo.Ctx, models.Key("user"), SecretModel.Username)
