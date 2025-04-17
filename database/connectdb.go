@@ -148,10 +148,11 @@ func GetConnection() *sql.DB {
 	db, err := sql.Open("postgres", dns)
 
 	if err != nil {
+		fmt.Println("getconnection() error conexion->", err)
 		log.Fatal(err)
 	}
 
-	defer db.Close()
+	// defer db.Close()
 
 	return db
 }
