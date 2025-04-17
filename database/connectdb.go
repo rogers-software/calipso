@@ -162,7 +162,7 @@ func GetConnection(ctx context.Context) *sql.DB {
 		log.Fatal(err)
 	}
 
-	defer db.Close()
+	// defer db.Close()
 
 	return db
 }
