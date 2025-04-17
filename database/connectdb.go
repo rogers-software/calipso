@@ -143,7 +143,13 @@ func BaseConectada(db *sql.DB) bool {
 }
 
 func GetConnection() *sql.DB {
+
 	dns := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
+
+	fmt.Println("Getconnection url postgres " + dns)
+	fmt.Println("User " + User)
+	fmt.Println("Password " + Password)
+	fmt.Println("Database " + DatabaseName)
 
 	db, err := sql.Open("postgres", dns)
 
