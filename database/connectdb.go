@@ -142,11 +142,15 @@ func BaseConectada(db *sql.DB) bool {
 	return err == nil
 }
 
-func GetConnection() *sql.DB {
+func GetConnection(ctx context.Context) *sql.DB {
+	User := ctx.Value(models.Key("user")).(string)
+	Password := ctx.Value(models.Key("password")).(string)
+	Host := ctx.Value(models.Key("host")).(string)
+	DatabaseName = ctx.Value(models.Key("database")).(string)
 
-	dns := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
+	dns := fmt.Sprintf("postgres://%s:root@%s/%s?sslmode=disable", User, Host, DatabaseName)
 
-	fmt.Println("Getconnection url postgres " + dns)
+	fmt.Println("Getconnection url-> " + dns)
 	fmt.Println("User " + User)
 	fmt.Println("Password " + Password)
 	fmt.Println("Database " + DatabaseName)
@@ -158,7 +162,7 @@ func GetConnection() *sql.DB {
 		log.Fatal(err)
 	}
 
-	// defer db.Close()
+	defer db.Close()
 
 	return db
 }

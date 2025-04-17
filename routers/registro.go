@@ -35,7 +35,7 @@ func Registro(ctx context.Context) models.ResApi {
 		return r
 	}
 
-	db := database.GetConnection()
+	db := database.GetConnection(ctx)
 
 	_, encontrado, _ := database.ExisteUsuario(db, t.Email)
 
