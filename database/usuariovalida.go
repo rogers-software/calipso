@@ -14,7 +14,7 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 
 	var resultado models.Usuario
 
-	fmt.Println("existe email email ->", email)
+	fmt.Println("existe email ->", email)
 
 	query := "SELECT id, nombre, apellidos FROM usuarios WHERE email = $1"
 
@@ -24,6 +24,10 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 		fmt.Println("existe mail error ->", err)
 		return resultado, false, 0
 	}
+
+	fmt.Println("id ->", id)
+	fmt.Println("Nombre ->", nombre)
+	fmt.Println("Apellidos ->", apellidos)
 
 	resultado.ID = id
 	resultado.Nombre = nombre
