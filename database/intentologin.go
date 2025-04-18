@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"rogers-software/calipso/models"
 
 	"golang.org/x/crypto/bcrypt"
@@ -9,6 +10,8 @@ import (
 func IntentoLogin(email string, password string) (models.Usuario, bool) {
 
 	usu, encontrado, _ := ExisteUsuario(DB, email)
+
+	fmt.Println("Existe Usuario ->", encontrado)
 
 	if !encontrado {
 		return usu, false
