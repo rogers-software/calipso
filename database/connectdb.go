@@ -28,7 +28,7 @@ func IniciarDB(ctx context.Context) error {
 
 	var err error
 
-	DNS = fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
+	DNS = fmt.Sprintf("postgres://%s:root@%s/%s?sslmode=disable", User, Host, DatabaseName)
 
 	DB, err = sql.Open("postgres", DNS)
 
