@@ -11,14 +11,15 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 	var id int
 	var nombre string
 	var apellidos string
+	var password string
 
 	var resultado models.Usuario
 
 	fmt.Println("existe email ->", email)
 
-	query := "SELECT id, nombre, apellidos FROM usuarios WHERE email = $1"
+	query := "SELECT id, nombre, apellidos, password FROM usuarios WHERE email = $1"
 
-	err := db.QueryRow(query, email).Scan(&id, &nombre, &apellidos)
+	err := db.QueryRow(query, email).Scan(&id, &nombre, &apellidos, &password)
 
 	if err != nil {
 		fmt.Println("existe mail error ->", err)
@@ -32,6 +33,7 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 	resultado.ID = id
 	resultado.Nombre = nombre
 	resultado.Apellidos = apellidos
+	resultado.Password = password
 
 	return resultado, true, id
 }
