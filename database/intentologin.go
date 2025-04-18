@@ -22,6 +22,10 @@ func IntentoLogin(email string, password string) (models.Usuario, bool) {
 
 	err := bcrypt.CompareHashAndPassword(passwordBD, passwordBytes)
 
+	fmt.Println("Password bytes error->", err)
+	fmt.Println("Password dbase error->", err)
+	fmt.Println("bcrypt error->", err)
+
 	if err != nil {
 		return usu, false
 	}
