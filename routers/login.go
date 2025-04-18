@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"net/mail"
+	"rogers-software/calipso/calipso"
 	"rogers-software/calipso/database"
 	"rogers-software/calipso/jwt"
 	"rogers-software/calipso/models"
@@ -32,7 +32,7 @@ func Login(ctx context.Context) models.ResApi {
 	}
 
 	// validar @ .
-	if !validEmail(t.Email) {
+	if !calipso.ValidEmail(t.Email) {
 		r.Message = "Email del usuario es incorrecto " + t.Email
 		return r
 	}
@@ -84,9 +84,4 @@ func Login(ctx context.Context) models.ResApi {
 
 	return r
 
-}
-
-func validEmail(email string) bool {
-	_, err := mail.ParseAddress(email)
-	return err == nil
 }

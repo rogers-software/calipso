@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"rogers-software/calipso/calipso"
 	"rogers-software/calipso/database"
 	"rogers-software/calipso/models"
 )
@@ -54,6 +55,12 @@ func Registro(ctx context.Context) models.ResApi {
 	if !status {
 		r.Message = "No se ha logrado insertar el registro del usuario"
 		fmt.Println(r.Message)
+		return r
+	}
+
+	// validar @ .
+	if !calipso.ValidEmail(t.Email) {
+		r.Message = "Email del usuario es incorrecto " + t.Email
 		return r
 	}
 
