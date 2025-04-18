@@ -35,9 +35,7 @@ func Registro(ctx context.Context) models.ResApi {
 		return r
 	}
 
-	db := database.GetConnection(ctx)
-
-	_, encontrado, _ := database.ExisteUsuario(db, t.Email)
+	_, encontrado, _ := database.ExisteUsuario(database.DB, t.Email)
 
 	if encontrado {
 		r.Message = "Ya existe un usuario registrado con este email"
@@ -45,7 +43,7 @@ func Registro(ctx context.Context) models.ResApi {
 		return r
 	}
 
-	_, status, err := database.InsertoRegistro(db, t)
+	_, status, err := database.InsertoRegistro(database.DB, t)
 
 	if err != nil {
 		r.Message = "Ocurrio un error al intentar relializar el registro del usuario " + err.Error()

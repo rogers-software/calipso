@@ -16,44 +16,32 @@ var Password string
 var Host string
 var DatabaseName string
 
-type Product struct {
-	Name      string
-	Price     float64
-	Available bool
-}
+var DB *sql.DB
+var DNS string
 
 func IniciarDB(ctx context.Context) error {
-	User := ctx.Value(models.Key("user")).(string)
-	Password := ctx.Value(models.Key("password")).(string)
-	Host := ctx.Value(models.Key("host")).(string)
+
+	User = ctx.Value(models.Key("user")).(string)
+	Password = ctx.Value(models.Key("password")).(string)
+	Host = ctx.Value(models.Key("host")).(string)
 	DatabaseName = ctx.Value(models.Key("database")).(string)
 
-	fmt.Println("Host Database " + Host)
+	var err error
 
-	connStr := fmt.Sprintf("postgres://%s:root@%s/%s?sslmode=disable", User, Host, DatabaseName)
+	DNS = fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", User, Password, Host, DatabaseName)
 
-	fmt.Println("url postgres " + connStr)
-	fmt.Println("User " + User)
-	fmt.Println("Password " + Password)
-	fmt.Println("Database " + DatabaseName)
-
-	/*psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-	"password=%s dbname=%s sslmode=disable",
-	"187.191.42.167", 5433, "postgres", "root", "rs")
-	*/
-	db, err := sql.Open("postgres", connStr)
+	DB, err = sql.Open("postgres", DNS)
 
 	if err != nil {
 		fmt.Println("error ", err)
 		log.Fatal(err)
 	}
 
-	if err = db.Ping(); err != nil {
-
+	if err = DB.Ping(); err != nil {
 		log.Fatal(err)
 	}
 
-	defer db.Close()
+	defer DB.Close()
 
 	fmt.Println("Conexion Exitosa con la BD")
 
@@ -140,29 +128,4 @@ func insertProduct(db *sql.DB, product Product) int {
 func BaseConectada(db *sql.DB) bool {
 	err := db.Ping()
 	return err == nil
-}
-
-func GetConnection(ctx context.Context) *sql.DB {
-	User := ctx.Value(models.Key("user")).(string)
-	Password := ctx.Value(models.Key("password")).(string)
-	Host := ctx.Value(models.Key("host")).(string)
-	DatabaseName = ctx.Value(models.Key("database")).(string)
-
-	dns := fmt.Sprintf("postgres://%s:root@%s/%s?sslmode=disable", User, Host, DatabaseName)
-
-	fmt.Println("Getconnection url-> " + dns)
-	fmt.Println("User " + User)
-	fmt.Println("Password " + Password)
-	fmt.Println("Database " + DatabaseName)
-
-	db, err := sql.Open("postgres", dns)
-
-	if err != nil {
-		fmt.Println("getconnection() error conexion->", err)
-		log.Fatal(err)
-	}
-
-	// defer db.Close()
-
-	return db
 }
