@@ -41,7 +41,7 @@ func IniciarDB(ctx context.Context) error {
 		log.Fatal(err)
 	}
 
-	defer DB.Close()
+	//defer DB.Close()
 
 	fmt.Println("Conexion Exitosa con la BD")
 
