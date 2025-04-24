@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"errors"
+	"rogers-software/calipso/database"
 	"rogers-software/calipso/models"
 	"strings"
 
@@ -9,16 +10,15 @@ import (
 )
 
 var Email string
-var IDUsuario string
+var IDUsuario int
 
-func ProcesoToken(tk string, JWTSign string) (*models.Claim, bool, string, error) {
+func ProcesoToken(tk string, JWTSign string) (*models.Claim, bool, int, error) {
 	miClave := []byte(JWTSign)
 	var claims models.Claim
 
 	splitToken := strings.Split(tk, "Bearer")
 	if len(splitToken) != 2 {
-		return &claims, false, string(""), errors.New("Formato de token invalido")
-
+		return &claims, false, 0, errors.New("Formato de token invalido")
 	}
 
 	tk = strings.TrimSpace(splitToken[1])
@@ -28,13 +28,19 @@ func ProcesoToken(tk string, JWTSign string) (*models.Claim, bool, string, error
 	})
 	if err == nil {
 		// Rutina que cheque con la BD
+		_, encontrado, _ := database.ExisteUsuario(database.DB, claims.Email)
+		if encontrado {
+			Email = claims.Email
+			IDUsuario = claims.ID
+		}
+		return &claims, encontrado, IDUsuario, nil
 
 	}
 
 	if !tkn.Valid {
-		return &claims, false, string(""), errors.New("Token invalido")
+		return &claims, false, 0, errors.New("Token invalido")
 	}
 
-	return &claims, false, string(""), err
+	return &claims, false, 0, err
 
 }
