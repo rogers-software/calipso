@@ -73,7 +73,7 @@ func validoAuthorization(ctx context.Context, request events.APIGatewayProxyRequ
 			return false, 401, "Error Token", models.Claim{}
 		} else {
 			fmt.Println("Error en el token... ")
-			return false, 401, "Error token", models.Claim{}
+			return false, 401, "Error token...", models.Claim{}
 		}
 	}
 	fmt.Println("Token ok ")
