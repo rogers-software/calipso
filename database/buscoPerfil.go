@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"rogers-software/calipso/models"
+	"strconv"
 	"time"
 )
 
 func BuscoPerfil(db *sql.DB, ID string) (models.Usuario, error) {
-
+	var id int
 	var nombre string
 	var apellidos string
 	var fechanacimiento time.Time
@@ -21,15 +22,20 @@ func BuscoPerfil(db *sql.DB, ID string) (models.Usuario, error) {
 	var sitioweb string
 
 	var perfil models.Usuario
+	id, errInt := strconv.Atoi(ID)
+	if errInt != nil {
+		fmt.Println("id no existe ->", errInt)
+		return perfil, errInt
+	}
 
-	fmt.Println("existe ID ->", ID)
+	fmt.Println("existe ID ->", id)
 
-	query := "SELECT nombre, apellidos, fechanacimiento, email, password, avatar, banner, biografia, ubicacion, sitioweb FROM usuarios WHERE Id = $1"
+	query := "SELECT id, nombre, apellidos, fechanacimiento, email, password, avatar, banner, biografia, ubicacion, sitioweb FROM usuarios WHERE Id = $1"
 
-	err := db.QueryRow(query, ID).Scan(&nombre, &apellidos, &fechanacimiento, &email, &password, &avatar, &banner, &biografia, &ubicacion, &sitioweb)
+	err := db.QueryRow(query, id).Scan(&nombre, &apellidos, &fechanacimiento, &email, &password, &avatar, &banner, &biografia, &ubicacion, &sitioweb)
 
 	if err != nil {
-		fmt.Println("ID no existe ->", err)
+		fmt.Println("id no existe ->", err)
 		return perfil, err
 	}
 
