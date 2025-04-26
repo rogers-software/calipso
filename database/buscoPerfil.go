@@ -38,7 +38,7 @@ func BuscoPerfil(db *sql.DB, ID string) (models.Usuario, error) {
 		fmt.Println("error al buscar dtatabase ->", err)
 		return perfil, err
 	}
-
+	perfil.ID = id
 	perfil.Nombre = nombre
 	perfil.Apellidos = apellidos
 	perfil.FechaNacimiento = fechanacimiento
