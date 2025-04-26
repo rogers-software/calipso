@@ -78,6 +78,6 @@ func validoAuthorization(ctx context.Context, request events.APIGatewayProxyRequ
 		}
 	}
 	fmt.Println("Token ok ")
-	return false, 200, "Token ok", *claim
+	return true, 200, "Token ok", *claim
 
 }
