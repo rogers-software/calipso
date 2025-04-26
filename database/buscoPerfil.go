@@ -24,18 +24,18 @@ func BuscoPerfil(db *sql.DB, ID string) (models.Usuario, error) {
 	var perfil models.Usuario
 	id, errInt := strconv.Atoi(ID)
 	if errInt != nil {
-		fmt.Println("id no existe ->", errInt)
+		fmt.Println("id error ->", errInt)
 		return perfil, errInt
 	}
 
-	fmt.Println("existe ID ->", id)
+	fmt.Println("procesando ID ->", id)
 
-	query := "SELECT id, nombre, apellidos, fechanacimiento, email, password, avatar, banner, biografia, ubicacion, sitioweb FROM usuarios WHERE Id = $1"
+	query := "SELECT nombre, apellidos, fechanacimiento, email, password, avatar, banner, biografia, ubicacion, sitioweb FROM usuarios WHERE Id = $1"
 
 	err := db.QueryRow(query, id).Scan(&nombre, &apellidos, &fechanacimiento, &email, &password, &avatar, &banner, &biografia, &ubicacion, &sitioweb)
 
 	if err != nil {
-		fmt.Println("id no existe ->", err)
+		fmt.Println("error al buscar dtatabase ->", err)
 		return perfil, err
 	}
 
