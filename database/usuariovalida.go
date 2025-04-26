@@ -15,14 +15,14 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 
 	var resultado models.Usuario
 
-	fmt.Println("existe email ->", email)
+	fmt.Println("EXISTEUSUARIO:email ->", email)
 
 	query := "SELECT id, nombre, apellidos, password FROM usuarios WHERE email = $1"
 
 	err := db.QueryRow(query, email).Scan(&id, &nombre, &apellidos, &password)
 
 	if err != nil {
-		fmt.Println("existe mail error ->", err)
+		fmt.Println("EXISTEUSUARIO:mail error ->", err)
 		return resultado, false, 0
 	}
 

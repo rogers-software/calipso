@@ -3,21 +3,23 @@ package jwt
 import (
 	"errors"
 	"fmt"
-	"rogers-software/calipso/database"
 	"rogers-software/calipso/models"
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var Email string
-var IDUsuario int
-
 func ProcesoToken(tk string, JWTSign string) (*models.Claim, bool, int, error) {
 	miClave := []byte(JWTSign)
 	var claims models.Claim
 
+	fmt.Println("JWTSign ->", miClave)
+	fmt.Println("Token ->", tk)
+
 	splitToken := strings.Split(tk, "Bearer")
+
+	fmt.Println("SplitToken ->", splitToken)
+
 	if len(splitToken) != 2 {
 		return &claims, false, 0, errors.New("formato de token invalido")
 	}
@@ -27,15 +29,16 @@ func ProcesoToken(tk string, JWTSign string) (*models.Claim, bool, int, error) {
 	tkn, err := jwt.ParseWithClaims(tk, &claims, func(token *jwt.Token) (interface{}, error) {
 		return miClave, nil
 	})
+
 	if err == nil {
 		// Rutina que cheque con la BD
-		fmt.Println("email ->", claims.Email)
-		_, encontrado, _ := database.ExisteUsuario(database.DB, claims.Email)
-		if encontrado {
-			Email = claims.Email
-			IDUsuario = claims.ID
-		}
-		return &claims, encontrado, IDUsuario, nil
+		//fmt.Println("email ->", claims.Email)
+		//_, encontrado, _ := database.ExisteUsuario(database.DB, claims.Email)
+		//if encontrado {
+		//	Email = claims.Email
+		//		IDUsuario = claims.ID
+		//	}
+		return &claims, true, 0, nil
 
 	}
 

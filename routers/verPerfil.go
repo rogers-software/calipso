@@ -29,7 +29,7 @@ func VerPerfil(request events.APIGatewayProxyRequest) models.ResApi {
 	respJson, err := json.Marshal(perfil)
 	if err != nil {
 		r.Status = 500
-		r.Message = "Error al formatear los daroa de usuarios JSON" + err.Error()
+		r.Message = "Error al formatear los datos de usuarios JSON" + err.Error()
 		return r
 	}
 	r.Status = 200

@@ -60,6 +60,7 @@ func validoAuthorization(ctx context.Context, request events.APIGatewayProxyRequ
 	if path == "registro" || path == "login" || path == "obtenerAvatar" || path == "obtenerBanner" {
 		return true, 200, "", models.Claim{}
 	}
+
 	token := request.Headers["Authorization"]
 	if len(token) == 0 {
 		return false, 401, "Token Requerido", models.Claim{}
