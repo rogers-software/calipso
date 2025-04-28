@@ -42,7 +42,7 @@ func ExisteUsuario(db *sql.DB, email string) (models.Usuario, bool, int) {
 	resultado.Apellidos = apellidos
 	resultado.FechaNacimiento = fechanacimiento
 	resultado.Email = email
-	// resultado.Password = password
+	resultado.Password = password
 	resultado.Avatar = avatar
 	resultado.Banner = banner
 	resultado.Biografia = biografia
